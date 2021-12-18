@@ -13,12 +13,17 @@ export default () =>
       {
         path: '/about',
         name: 'About',
-        component: () => import('../views/About.vue'),
+        component: () => import('../views/about/'),
       },
       {
         path: '/contact',
         name: 'Contact',
-        component: () => import('../views/Contact.vue'),
+        component: () => import('../views/contact/'),
+      },
+      {
+        path: '/tools',
+        name: 'Tools',
+        component: () => import('../views/tools/'),
       },
     ],
   })
