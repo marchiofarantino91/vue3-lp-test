@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router/dist/vue-router.esm-bundler'
-import Home from '../views/Home.vue'
+import Home from '../views/home/'
 
 export default () =>
   createRouter({
