@@ -68,15 +68,26 @@ export default {
   data() {
     return {
       displayCalc: '',
+      operators:'',
     }
   },
   methods: {
     addDisplay(event) {
-      console.log(event.currentTarget.id)
-      let angka = ['1','2','3','4','5','6','7','8','9','0']
-      let selected = event.currentTarget.id;
       
-      this.displayCalc += event.currentTarget.id;
+      let angka = ['1','2','3','4','5','6','7','8','9','0']
+      let operator = ['tambah','kurang','kali','bagi']
+      let selected = event.currentTarget.id;
+      if(angka.includes(selected)){
+        this.displayCalc += event.currentTarget.id;
+        console.log(this.displayCalc)
+      }
+      if (operator.includes(selected)){
+        this.operators = event.currentTarget.id;
+          console.log(this.operators)
+        
+      }
+      
+    
     },
   },
   computed: {},
