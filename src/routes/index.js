@@ -25,5 +25,15 @@ export default () =>
         name: 'Tools',
         component: () => import('../views/tools/'),
       },
+      {
+        path: '/tools/calc',
+        name: 'Calculator',
+        component: () => import('../views/tools/calc'),
+      },
+      {
+        path: '/tools/todo',
+        name: 'Todo',
+        component: () => import('../views/tools/todo'),
+      },
     ],
   })
