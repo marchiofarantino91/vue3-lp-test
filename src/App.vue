@@ -1,11 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="https://vuejs.org/images/logo.png">
-    <nav>
-      <router-link to="/">Home</router-link> | 
-      <router-link to="/about">About</router-link> | 
-      <router-link to="/contact">Contact</router-link>
-    </nav>
+    <ul class="nav bg-primary justify-content-center">
+      <li class="nav-item">
+        <router-link class="text-white nav-link " to="/">Home</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link class="text-white nav-link" to="/about">About</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link class="text-white nav-link" to="/contact">Contact</router-link>
+      </li>
+    </ul>
+    <nav></nav>
     <main>
       <router-view />
     </main>
@@ -16,13 +22,4 @@
 export default {}
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
