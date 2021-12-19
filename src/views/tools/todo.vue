@@ -1,6 +1,8 @@
 <template>
   <h1>TODO</h1>
-  <router-link class="text-dark nav-link" to="/tools"><<-Previous</router-link>
+  <hr />
+  <router-link class="text-dark nav-link" to="/tools">Previous</router-link>
+  <hr />
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-6">
@@ -11,6 +13,7 @@
         </div>
       </div>
       <div class="col-12">
+        {{ saved }}
         <table class="table">
           <thead>
             <tr>
@@ -26,7 +29,7 @@
                 <td>
                   <input class="form-check-input" type="checkbox" v-model="row.isSelected" id="flexCheckDefault" />
                 </td>
-                <td>{{ row.number }}.</td>
+                <td>{{ index + 1 }}.</td>
                 <td>{{ row.desc }}.</td>
                 <td v-if="row.isSelected">
                   <button type="button" class="btn btn-primary">Edit</button>
@@ -53,6 +56,7 @@ export default {
   data() {
     return {
       saved: [],
+      displayTask: 'ss',
       formatData: {
         isSelected: false,
         number: 0,
@@ -64,10 +68,12 @@ export default {
   methods: {
     saveData() {
       this.formatData.number = this.saved.length + 1
-      this.saved.push(this.formatData)
-      this.resetForm
+      if (this.displayTask != '') {
+        this.saved.push(this.formatData)
+      }
     },
     resetForm() {
+      this.displayTask = ''
       this.formatData.number = 0
       this.formatData.isSelected = false
       this.formatData.desc = ''
