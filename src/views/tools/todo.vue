@@ -5,7 +5,6 @@
   <hr />
   <div class="container">
     <div class="row justify-content-center">
-    
       <div class="col-6">
         <div class="mb-3">
           <label for=" todo" class="form-label">Input Todo</label>
@@ -25,12 +24,16 @@
           </thead>
           <tbody>
             <template v-if="saved.length > 0">
-              <tr v-for="(row, index) in saved" :key="'row-' + index" >
+              <tr v-for="(row, index) in saved" :key="'row-' + index">
                 <td>{{ index + 1 }}.</td>
                 <td>{{ row.desc }}.</td>
                 <td>
-                  <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</button>
-                  <button type="button" class="btn btn-danger" @click="deleteData(index, row)"> <i class="fas fa-trash-alt"></i> Delete</button>
+                  <button type="button" class="btn btn-primary" @click="editData(index, row)">
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
+                  <button type="button" class="btn btn-danger" @click="deleteData(index, row)">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
                 </td>
                 <td v-else></td>
               </tr>
@@ -54,6 +57,8 @@ export default {
     return {
       saved: [],
       displayTask: '',
+      state: '',
+      edit: {},
       // formatData: {
       //   isSelected: false,
       //   number: 0,
@@ -68,9 +73,10 @@ export default {
         desc: this.displayTask,
         done: false,
       }
-      if (formatData.desc != '') {
+      if (formatData.desc != '' && this.state == '') {
         this.saved.push(formatData)
         this.displayTask = ''
+      } else if (formatData.desc != '' && this.state == 'edit') {
       }
     },
     resetForm() {
@@ -80,9 +86,14 @@ export default {
       this.formatData.desc = ''
       this.formatData.done = false
     },
-
+    editData(index, row) {
+      this.edit = this.saved[index]
+      console.log(this.edit)
+      this.displayTask = this.edit.desc
+      this.state = 'edit'
+      console.log(this.state)
+    },
     deleteData(index, row) {
-
       this.saved.splice(index, 1)
     },
   },
