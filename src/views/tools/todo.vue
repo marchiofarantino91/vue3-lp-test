@@ -5,10 +5,11 @@
   <hr />
   <div class="container">
     <div class="row justify-content-center">
+    
       <div class="col-6">
         <div class="mb-3">
           <label for=" todo" class="form-label">Input Todo</label>
-          <textarea v-model="formatData.desc" class="form-control" id=" todo" rows="3"></textarea>
+          <textarea v-model="displayTask" class="form-control" id=" todo" rows="3"></textarea>
           <button type="button" class="btn btn-primary" id="todo" @click="saveData">Simpan</button>
         </div>
       </div>
@@ -17,7 +18,6 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col"></th>
               <th scope="col">No.</th>
               <th scope="col">Task</th>
               <th scope="col">Aksi</th>
@@ -25,15 +25,12 @@
           </thead>
           <tbody>
             <template v-if="saved.length > 0">
-              <tr v-for="(row, index) in saved" :key="'row-' + index" @click="click(row)">
-                <td>
-                  <input class="form-check-input" type="checkbox" v-model="row.isSelected" id="flexCheckDefault" />
-                </td>
+              <tr v-for="(row, index) in saved" :key="'row-' + index" >
                 <td>{{ index + 1 }}.</td>
                 <td>{{ row.desc }}.</td>
-                <td v-if="row.isSelected">
-                  <button type="button" class="btn btn-primary">Edit</button>
-                  <button type="button" class="btn btn-danger">Delete</button>
+                <td>
+                  <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</button>
+                  <button type="button" class="btn btn-danger" @click="deleteData(index, row)"> <i class="fas fa-trash-alt"></i> Delete</button>
                 </td>
                 <td v-else></td>
               </tr>
@@ -56,20 +53,24 @@ export default {
   data() {
     return {
       saved: [],
-      displayTask: 'ss',
-      formatData: {
-        isSelected: false,
-        number: 0,
-        desc: '',
-        done: false,
-      },
+      displayTask: '',
+      // formatData: {
+      //   isSelected: false,
+      //   number: 0,
+      //   desc: '',
+      //   done: false,
+      // },
     }
   },
   methods: {
     saveData() {
-      this.formatData.number = this.saved.length + 1
-      if (this.displayTask != '') {
-        this.saved.push(this.formatData)
+      let formatData = {
+        desc: this.displayTask,
+        done: false,
+      }
+      if (formatData.desc != '') {
+        this.saved.push(formatData)
+        this.displayTask = ''
       }
     },
     resetForm() {
@@ -79,8 +80,10 @@ export default {
       this.formatData.desc = ''
       this.formatData.done = false
     },
-    click(row) {
-      row.isSelected = !row.isSelected
+
+    deleteData(index, row) {
+
+      this.saved.splice(index, 1)
     },
   },
 }
