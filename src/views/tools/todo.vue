@@ -129,6 +129,13 @@ export default {
       // },
     }
   },
+  async created(){
+   let saved = JSON.parse(localStorage.getItem("saved"));
+   let done =  JSON.parse(localStorage.getItem("done"));
+   this.saved = saved
+   this.done = done? done:[]
+   console.log(saved)
+  },
   methods: {
     saveData() {
       let formatData = {
@@ -143,6 +150,7 @@ export default {
       } else if (formatData.desc != '' && this.state == 'edit') {
         this.saved[this.edit] = formatData
       }
+      localStorage.setItem("saved", JSON.stringify(this.saved) );
     },
     resetForm() {
       this.displayTask = ''
@@ -161,10 +169,13 @@ export default {
     },
     deleteData(index, row) {
       this.saved.splice(index, 1)
+      localStorage.setItem("saved", JSON.stringify(this.saved) );
     },
     doneData(index, row) {
       this.done.push(this.saved[index])
       this.deleteData(index,row)
+      localStorage.setItem("saved", JSON.stringify(this.saved) );
+      localStorage.setItem("done", JSON.stringify(this.done) );
     },
   },
 }
