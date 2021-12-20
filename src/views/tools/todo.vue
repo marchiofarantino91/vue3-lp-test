@@ -5,15 +5,36 @@
   <hr />
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-6">
+      <div class="col-8">
         <div class="mb-3">
-          <label for=" todo" class="form-label">Input Todo</label>
-          <textarea v-model="displayTask" class="form-control" id=" todo" rows="3"></textarea>
-          <button type="button" class="btn btn-primary" id="todo" @click="saveData">Simpan</button>
+          <label for=" todo" class="form-label">Task Name</label>
+          <input
+            type="text"
+            v-model="displayTask"
+            class="form-control"
+            placeholder="Task Name"
+            aria-label="Username"
+            aria-describedby="addon-wrapping"
+            id=" todo"
+          />
+        </div>
+        <div class="input-group flex-nowrap">
+          <span class="input-group-text" id="addon-wrapping">https://</span>
+          <input
+            type="text"
+            v-model="displayLink"
+            class="form-control"
+            placeholder="Link Task"
+            aria-label="Username"
+            aria-describedby="addon-wrapping"
+          />
         </div>
       </div>
-      <div class="col-12">
-        {{ saved }}
+      <div class="col-8 mt-5 text-center">
+        <button type="button" class="btn btn-primary" id="todo" @click="saveData">Simpan</button>
+      </div>
+      <div class="col-6">
+   
         <table class="table">
           <thead>
             <tr>
@@ -26,7 +47,47 @@
             <template v-if="saved.length > 0">
               <tr v-for="(row, index) in saved" :key="'row-' + index">
                 <td>{{ index + 1 }}.</td>
-                <td>{{ row.desc }}.</td>
+                <td>
+                  {{ row.desc }} <br>
+                  <small><a class="nav-link p-0" href=`https://{{row.link}}`>https://{{row.link}}</a></small>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary" @click="editData(index, row)">
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
+                  <button type="button" class="btn btn-danger" @click="deleteData(index, row)">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
+                </td>
+                <td v-else></td>
+              </tr>
+            </template>
+            <template v-else>
+              <td colspan="3" align="center">
+                <p style="display: block; text-align: center; padding: 5px; font-size: 14px">No data for table</p>
+              </td>
+            </template>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-6">
+ 
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Task</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template v-if="saved.length > 0">
+              <tr v-for="(row, index) in saved" :key="'row-' + index">
+                <td>{{ index + 1 }}.</td>
+                <td>
+                  {{ row.desc }} <br>
+                  <small><a class="nav-link p-0" href=`https://{{row.link}}`>https://{{row.link}}</a></small>
+                </td>
                 <td>
                   <button type="button" class="btn btn-primary" @click="editData(index, row)">
                     <i class="fas fa-edit"></i> Edit
@@ -57,6 +118,7 @@ export default {
     return {
       saved: [],
       displayTask: '',
+      displayLink: '',
       state: '',
       edit: {},
       // formatData: {
@@ -71,12 +133,15 @@ export default {
     saveData() {
       let formatData = {
         desc: this.displayTask,
+        link: this.displayLink,
         done: false,
       }
       if (formatData.desc != '' && this.state == '') {
         this.saved.push(formatData)
         this.displayTask = ''
+        this.displayLink= ''
       } else if (formatData.desc != '' && this.state == 'edit') {
+        this.saved[this.edit] = formatData
       }
     },
     resetForm() {
@@ -87,9 +152,10 @@ export default {
       this.formatData.done = false
     },
     editData(index, row) {
-      this.edit = this.saved[index]
+      this.edit = index
       console.log(this.edit)
-      this.displayTask = this.edit.desc
+      this.displayTask = row.desc
+      this.displayLink = row.link
       this.state = 'edit'
       console.log(this.state)
     },
