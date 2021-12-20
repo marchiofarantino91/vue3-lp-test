@@ -18,8 +18,9 @@
             id=" todo"
           />
         </div>
+        <label for=" link" class="form-label">Link Task</label>
         <div class="input-group flex-nowrap">
-          <span class="input-group-text" id="addon-wrapping">https://</span>
+          <span class="input-group-text " id="addon-wrapping" id="link">https://</span>
           <input
             type="text"
             v-model="displayLink"
@@ -30,16 +31,18 @@
           />
         </div>
       </div>
-      <div class="col-8 mt-5 text-center">
+      <div class="col-8 my-5 text-center ">
         <button type="button" class="btn btn-primary" id="todo" @click="saveData">Simpan</button>
       </div>
+      <hr>
       <div class="col-6">
-   
+        
+        <h1><i class="fas fa-clipboard-list"></i> TODO </h1>
         <table class="table">
           <thead>
             <tr>
               <th scope="col">No.</th>
-              <th scope="col">Task</th>
+              <th scope="col" style="width:250px">Task</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -47,16 +50,19 @@
             <template v-if="saved.length > 0">
               <tr v-for="(row, index) in saved" :key="'row-' + index">
                 <td>{{ index + 1 }}.</td>
-                <td>
+                <td style="width:250px">
                   {{ row.desc }} <br>
                   <small><a class="nav-link p-0" href=`https://{{row.link}}`>https://{{row.link}}</a></small>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary" @click="editData(index, row)">
-                    <i class="fas fa-edit"></i> Edit
+                  <button type="button" class="btn btn-success btn-sm" @click="doneData(index, row)">
+                  <i class="fas fa-check-square"></i>
                   </button>
-                  <button type="button" class="btn btn-danger" @click="deleteData(index, row)">
-                    <i class="fas fa-trash-alt"></i> Delete
+                  <button type="button" class="btn btn-primary btn-sm" @click="editData(index, row)">
+                  <i class="fas fa-edit"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-sm" @click="deleteData(index, row)">
+                  <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
                 <td v-else></td>
@@ -71,31 +77,24 @@
         </table>
       </div>
       <div class="col-6">
- 
+      
+      <h1><i class="fas fa-check-square"></i> DONE</h1>
         <table class="table">
           <thead>
             <tr>
               <th scope="col">No.</th>
               <th scope="col">Task</th>
-              <th scope="col">Aksi</th>
             </tr>
           </thead>
           <tbody>
-            <template v-if="saved.length > 0">
-              <tr v-for="(row, index) in saved" :key="'row-' + index">
+            <template v-if="done.length > 0">
+              <tr v-for="(row, index) in done" :key="'row-' + index">
                 <td>{{ index + 1 }}.</td>
                 <td>
                   {{ row.desc }} <br>
                   <small><a class="nav-link p-0" href=`https://{{row.link}}`>https://{{row.link}}</a></small>
                 </td>
-                <td>
-                  <button type="button" class="btn btn-primary" @click="editData(index, row)">
-                    <i class="fas fa-edit"></i> Edit
-                  </button>
-                  <button type="button" class="btn btn-danger" @click="deleteData(index, row)">
-                    <i class="fas fa-trash-alt"></i> Delete
-                  </button>
-                </td>
+                
                 <td v-else></td>
               </tr>
             </template>
@@ -117,6 +116,7 @@ export default {
   data() {
     return {
       saved: [],
+      done:[],
       displayTask: '',
       displayLink: '',
       state: '',
@@ -161,6 +161,10 @@ export default {
     },
     deleteData(index, row) {
       this.saved.splice(index, 1)
+    },
+    doneData(index, row) {
+      this.done.push(this.saved[index])
+      this.deleteData(index,row)
     },
   },
 }
