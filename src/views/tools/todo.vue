@@ -35,7 +35,7 @@
         <button type="button" class="btn btn-primary" id="todo" @click="saveData">Simpan</button>
       </div>
       <hr>
-      <div class="col-6">
+      <div class="col-6" style="border-right:1px solid black">
         
         <h1><i class="fas fa-clipboard-list"></i> TODO </h1>
         <table class="table">
