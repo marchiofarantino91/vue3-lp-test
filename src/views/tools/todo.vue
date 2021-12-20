@@ -20,7 +20,7 @@
         </div>
         <label for=" link" class="form-label">Link Task</label>
         <div class="input-group flex-nowrap">
-          <span class="input-group-text " id="addon-wrapping" id="link">https://</span>
+          <span class="input-group-text" id="addon-wrapping" id="link">https://</span>
           <input
             type="text"
             v-model="displayLink"
@@ -31,18 +31,17 @@
           />
         </div>
       </div>
-      <div class="col-8 my-5 text-center ">
+      <div class="col-8 my-5 text-center">
         <button type="button" class="btn btn-primary" id="todo" @click="saveData">Simpan</button>
       </div>
-      <hr>
-      <div class="col-6" style="border-right:1px solid black">
-        
-        <h1><i class="fas fa-clipboard-list"></i> TODO </h1>
+      <hr />
+      <div class="col-md-6 col-12" style="border-right: 1px solid black">
+        <h1><i class="fas fa-clipboard-list"></i> TODO</h1>
         <table class="table">
           <thead>
             <tr>
               <th scope="col">No.</th>
-              <th scope="col" style="width:250px">Task</th>
+              <th scope="col">Task</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -50,19 +49,23 @@
             <template v-if="saved.length > 0">
               <tr v-for="(row, index) in saved" :key="'row-' + index">
                 <td>{{ index + 1 }}.</td>
-                <td style="width:250px">
-                  {{ row.desc }} <br>
-                  <small><a class="nav-link p-0" href=`https://{{row.link}}`>https://{{row.link}}</a></small>
+                <td>
+                  {{ row.desc }} <br />
+                  <small
+                    ><a class="nav-link p-0" target="_blank" @click="redirect(row.link)"
+                      >https://{{ row.link }}</a
+                    ></small
+                  >
                 </td>
                 <td>
                   <button type="button" class="btn btn-success btn-sm" @click="doneData(index, row)">
-                  <i class="fas fa-check-square"></i>
+                    <i class="fas fa-check-square"></i>
                   </button>
                   <button type="button" class="btn btn-primary btn-sm" @click="editData(index, row)">
-                  <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit"></i>
                   </button>
                   <button type="button" class="btn btn-danger btn-sm" @click="deleteData(index, row)">
-                  <i class="fas fa-trash-alt"></i>
+                    <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
                 <td v-else></td>
@@ -76,9 +79,8 @@
           </tbody>
         </table>
       </div>
-      <div class="col-6">
-      
-      <h1><i class="fas fa-check-square"></i> DONE</h1>
+      <div class="col-12 col-md-6">
+        <h1><i class="fas fa-check-square"></i> DONE</h1>
         <table class="table">
           <thead>
             <tr>
@@ -91,10 +93,12 @@
               <tr v-for="(row, index) in done" :key="'row-' + index">
                 <td>{{ index + 1 }}.</td>
                 <td>
-                  {{ row.desc }} <br>
-                  <small><a class="nav-link p-0" href=`https://{{row.link}}`>https://{{row.link}}</a></small>
+                  {{ row.desc }} <br />
+                  <small
+                    ><a class="nav-link p-0" @click="redirect(row.link)">https://{{ row.link }}</a></small
+                  >
                 </td>
-                
+
                 <td v-else></td>
               </tr>
             </template>
@@ -116,7 +120,7 @@ export default {
   data() {
     return {
       saved: [],
-      done:[],
+      done: [],
       displayTask: '',
       displayLink: '',
       state: '',
@@ -129,12 +133,12 @@ export default {
       // },
     }
   },
-  async created(){
-   let saved = JSON.parse(localStorage.getItem("saved"));
-   let done =  JSON.parse(localStorage.getItem("done"));
-   this.saved = saved
-   this.done = done? done:[]
-   console.log(saved)
+  async created() {
+    let saved = JSON.parse(localStorage.getItem('saved'))
+    let done = JSON.parse(localStorage.getItem('done'))
+    this.saved = saved
+    this.done = done ? done : []
+    console.log(saved)
   },
   methods: {
     saveData() {
@@ -146,11 +150,11 @@ export default {
       if (formatData.desc != '' && this.state == '') {
         this.saved.push(formatData)
         this.displayTask = ''
-        this.displayLink= ''
+        this.displayLink = ''
       } else if (formatData.desc != '' && this.state == 'edit') {
         this.saved[this.edit] = formatData
       }
-      localStorage.setItem("saved", JSON.stringify(this.saved) );
+      localStorage.setItem('saved', JSON.stringify(this.saved))
     },
     resetForm() {
       this.displayTask = ''
@@ -169,13 +173,16 @@ export default {
     },
     deleteData(index, row) {
       this.saved.splice(index, 1)
-      localStorage.setItem("saved", JSON.stringify(this.saved) );
+      localStorage.setItem('saved', JSON.stringify(this.saved))
+    },
+    redirect(query) {
+      window.open(query)
     },
     doneData(index, row) {
       this.done.push(this.saved[index])
-      this.deleteData(index,row)
-      localStorage.setItem("saved", JSON.stringify(this.saved) );
-      localStorage.setItem("done", JSON.stringify(this.done) );
+      this.deleteData(index, row)
+      localStorage.setItem('saved', JSON.stringify(this.saved))
+      localStorage.setItem('done', JSON.stringify(this.done))
     },
   },
 }
