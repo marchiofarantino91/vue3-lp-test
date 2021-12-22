@@ -20,7 +20,6 @@
         </div>
         <label for=" link" class="form-label">Link Task</label>
         <div class="input-group flex-nowrap">
-          <span class="input-group-text" id="addon-wrapping" id="link">https://</span>
           <input
             type="text"
             v-model="displayLink"
@@ -52,9 +51,7 @@
                 <td>
                   {{ row.desc }} <br />
                   <small
-                    ><a class="nav-link p-0" target="_blank" @click="redirect(row.link)"
-                      >https://{{ row.link }}</a
-                    ></small
+                    ><a class="nav-link p-0" target="_blank" @click="redirect(row.link)">{{ row.link }}</a></small
                   >
                 </td>
                 <td>
