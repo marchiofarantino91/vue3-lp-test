@@ -13,7 +13,14 @@ export default () =>
       {
         path: '/about',
         name: 'About',
-        component: () => import('../views/about/'),
+        children: [
+          {
+            // UserProfile will be rendered inside User's <router-view>
+            // when /user/:id/profile is matched
+            path: 'about-us',
+            component: () => import('../views/about/'),
+          },
+        ]
       },
       {
         path: '/contact',
