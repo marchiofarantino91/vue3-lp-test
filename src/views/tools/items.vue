@@ -2,10 +2,11 @@
   <h1>Tools</h1>
   <router-link class="text-dark nav-link" to="/tools">Previous</router-link>
   <hr />
-  <div class="row">
+  <div class="container">
+    <div class="row">
     <h1>Cart Items</h1>
 
-    <div class="col-12">
+    <div class="col-6">
       <select
         v-model="selectItems"
         @change="addItem"
@@ -72,6 +73,7 @@
         </tbody>
       </table>
     </div>
+  </div>
   </div>
 </template>
 
