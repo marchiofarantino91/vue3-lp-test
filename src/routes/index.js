@@ -20,7 +20,7 @@ export default () =>
             path: 'about-us',
             component: () => import('../views/about/'),
           },
-        ]
+        ],
       },
       {
         path: '/contact',
@@ -41,6 +41,11 @@ export default () =>
         path: '/tools/todo',
         name: 'Todo',
         component: () => import('../views/tools/todo'),
+      },
+      {
+        path: '/tools/items',
+        name: 'Item List Calculate',
+        component: () => import('../views/tools/items'),
       },
     ],
   })
