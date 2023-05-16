@@ -131,8 +131,8 @@ export default {
     }
   },
   async created() {
-    let saved = JSON.parse(localStorage.getItem('saved'))
-    let done = JSON.parse(localStorage.getItem('done'))
+    let saved = JSON.parse(localStorage.getItem('saved')) ||[]
+    let done = JSON.parse(localStorage.getItem('done')) || []
     this.saved = saved
     this.done = done ? done : []
     console.log(saved)

@@ -43,6 +43,11 @@ export default () =>
         component: () => import('../views/tools/todo'),
       },
       {
+        path: '/tools/todo2',
+        name: 'Todo2',
+        component: () => import('../views/tools/todo2'),
+      },
+      {
         path: '/tools/items',
         name: 'Item List Calculate',
         component: () => import('../views/tools/items'),
